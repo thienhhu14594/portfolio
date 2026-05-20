@@ -22,3 +22,28 @@ Temporarily excluded datasource auto-configuration until PostgreSQL setup is rea
 ## Lessons Learned
 
 Spring Boot automatically configures datasource when JPA dependencies are included.
+
+# Build Project Entity Flow
+
+## Goal
+
+Build Project Entity flow with structure layers: Entity, Service, Controller, Repository.
+
+## Complete
+
+- create Project entity flow
+- fix require a bean of type in ProjectService temporarily
+- create projects endpoint
+- successfully test on Thunder Client
+
+## Problem
+
+Spring Boot fails to start because ProjectRepository bean cannot be found.
+
+## Solution
+
+Temporary disable components that depend on JPA repository. Temporarily replace database logic with mock data.
+
+## Lessons Learned
+
+With a JpaRepository, Spring needs a DataSource + JPA infrastructure to register the bean.

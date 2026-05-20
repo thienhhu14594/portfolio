@@ -123,3 +123,15 @@ The project is considered successful if:
 - the portfolio is responsive
 - documentation is completed
 - the project clearly demonstrate fullstack engineering skills
+
+## Project Stage
+
+| Stage | Focus                |
+| ----- | -------------------- |
+| 1     | Spring structure     | <- current
+| 2     | Controllers/services |
+| 3     | API testing          |
+| 4     | Frontend integration |
+| 5     | Database             |
+| 6     | Docker               |
+| 7     | Deployment           |

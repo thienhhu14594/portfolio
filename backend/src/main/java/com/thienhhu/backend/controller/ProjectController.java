@@ -1,5 +1,6 @@
 package com.thienhhu.backend.controller;
 
+import com.thienhhu.backend.dto.response.ProjectResponseDto;
 import com.thienhhu.backend.entity.Project;
 import com.thienhhu.backend.service.ProjectService;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -26,26 +28,30 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
-        return projectService.getAllProjects();
+    public List<ProjectResponseDto> getAllProjects() {
+        return projectService.getAllProjects().stream()
+                .map(ProjectResponseDto::from)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Long id) {
+    public ResponseEntity<ProjectResponseDto> getProjectById(@PathVariable Long id) {
         return projectService.getProjectById(id)
+                .map(ProjectResponseDto::from)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+    public ResponseEntity<ProjectResponseDto> createProject(@RequestBody Project project) {
         Project createdProject = projectService.createProject(project);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProjectResponseDto.from(createdProject));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project project) {
+    public ResponseEntity<ProjectResponseDto> updateProject(@PathVariable Long id, @RequestBody Project project) {
         return projectService.updateProject(id, project)
+                .map(ProjectResponseDto::from)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

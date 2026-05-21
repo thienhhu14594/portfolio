@@ -1,60 +1,117 @@
 import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const app = document.querySelector('#app')
 
-<div class="ticks"></div>
+async function renderPortfolioLayout() {
+  const response = await fetch('/portfolio.html')
+  if (!response.ok) {
+    throw new Error(`Unable to load /portfolio.html (status ${response.status})`)
+  }
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+  app.innerHTML = await response.text()
+}
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+function createProjectCard(project) {
+  const card = document.createElement('article')
+  card.className = 'card'
 
-setupCounter(document.querySelector('#counter'))
+  const title = document.createElement('h3')
+  title.textContent = project.title || 'Untitled project'
+
+  const description = document.createElement('p')
+  description.textContent = project.description || 'No description available.'
+
+  const technologies = document.createElement('p')
+  technologies.className = 'meta'
+  technologies.textContent = `Tech: ${project.technologies || 'N/A'}`
+
+  card.append(title, description, technologies)
+
+  if (project.githubUrl) {
+    const link = document.createElement('a')
+    link.href = project.githubUrl
+    link.target = '_blank'
+    link.rel = 'noreferrer noopener'
+    link.textContent = 'Repository'
+    card.appendChild(link)
+  }
+
+  if (project.featured) {
+    const badge = document.createElement('span')
+    badge.className = 'badge'
+    badge.textContent = 'Featured'
+    card.appendChild(badge)
+  }
+
+  return card
+}
+
+function renderProjects(projects) {
+  const projectsList = document.querySelector('#projects-list')
+  projectsList.innerHTML = ''
+
+  if (!Array.isArray(projects) || projects.length === 0) {
+    const empty = document.createElement('p')
+    empty.className = 'status-text'
+    empty.textContent = 'No projects found.'
+    projectsList.appendChild(empty)
+    return
+  }
+
+  projects.forEach((project) => {
+    projectsList.appendChild(createProjectCard(project))
+  })
+}
+
+async function loadProjects() {
+  const projectsList = document.querySelector('#projects-list')
+
+  try {
+    const response = await fetch('/api/projects')
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`)
+    }
+
+    const projects = await response.json()
+    renderProjects(projects)
+  } catch (error) {
+    projectsList.innerHTML = `
+      <p class="status-text">
+        Unable to load projects from <code>/api/projects</code>. Please make sure the backend is running.
+      </p>
+    `
+  }
+}
+
+async function bootstrap() {
+  try {
+    await renderPortfolioLayout()
+  } catch (error) {
+    app.innerHTML = `
+      <main class="page">
+        <section class="section">
+          <h1>Portfolio</h1>
+          <p class="status-text">
+            Unable to load page layout. Please make sure <code>/portfolio.html</code> exists.
+          </p>
+        </section>
+      </main>
+    `
+    return
+  }
+
+  const contactForm = document.querySelector('#contact-form')
+  const contactFeedback = document.querySelector('#contact-feedback')
+
+  if (contactForm && contactFeedback) {
+    contactForm.addEventListener('submit', (event) => {
+      event.preventDefault()
+      contactFeedback.textContent = 'Thanks for your message. I will get back to you soon.'
+      contactForm.reset()
+    })
+  }
+
+  loadProjects()
+}
+
+bootstrap()

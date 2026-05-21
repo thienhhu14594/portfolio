@@ -1,5 +1,6 @@
 package com.thienhhu.backend.controller;
 
+import com.thienhhu.backend.dto.response.HealthResponseDto;
 import com.thienhhu.backend.service.HealthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class HealthController {
     }
 
     @GetMapping("/health")
-    public String health() {
-        return healthService.getHealthMessage();
+    public HealthResponseDto health() {
+        return new HealthResponseDto(healthService.getHealthMessage());
     }
 }

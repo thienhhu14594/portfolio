@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
 @Table(name = "projects")
@@ -17,6 +18,8 @@ public class Project {
     private String title;
     private String description;
     private String technologies;
+
+    @Column(name = "github_url")
     private String githubUrl;
     private boolean featured;
 

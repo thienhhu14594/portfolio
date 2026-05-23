@@ -47,3 +47,9 @@ Temporary disable components that depend on JPA repository. Temporarily replace 
 ## Lessons Learned
 
 With a JpaRepository, Spring needs a DataSource + JPA infrastructure to register the bean.
+
+## Update (2026-05-23)
+
+- Removed the temporary datasource/JPA disabling approach
+- Switched `ProjectService` from mock data to `ProjectRepository` (Supabase PostgreSQL)
+- Moved datasource credentials to environment variables (no secrets in repo)

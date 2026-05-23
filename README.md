@@ -35,6 +35,16 @@ backend/    -> Spring Boot backend
 docs/       -> project documentation and devlogs
 ```
 
+## Environment Variables
+
+Backend expects these at runtime (local / Render):
+
+- `SPRING_DATASOURCE_URL` (example: `jdbc:postgresql://<host>:5432/<db>?sslmode=require`)
+- `SPRING_DATASOURCE_USERNAME`
+- `SPRING_DATASOURCE_PASSWORD`
+- Optional: `SPRING_JPA_HIBERNATE_DDL_AUTO` (default: `validate`)
+- Optional: `SPRING_JPA_SHOW_SQL` (default: `false`)
+
 ## Goals
 
 - Demonstrate backend engineering skills

@@ -16,31 +16,27 @@ function createProjectCard(project) {
   card.className = 'card'
 
   const title = document.createElement('h3')
-  title.textContent = project.title || 'Untitled project'
+  title.className = 'card-title'
+  title.textContent = project.title || "Project's title"
 
   const description = document.createElement('p')
+  description.className = 'project-desc'
   description.textContent = project.description || 'No description available.'
 
   const technologies = document.createElement('p')
-  technologies.className = 'meta'
-  technologies.textContent = `Tech: ${project.technologies || 'N/A'}`
+  technologies.className = 'project-meta'
+  technologies.textContent = `Tech: ${project.technologies || ''}`
 
   card.append(title, description, technologies)
 
   if (project.githubUrl) {
     const link = document.createElement('a')
+    link.className = 'project-link'
     link.href = project.githubUrl
     link.target = '_blank'
     link.rel = 'noreferrer noopener'
     link.textContent = 'Repository'
     card.appendChild(link)
-  }
-
-  if (project.featured) {
-    const badge = document.createElement('span')
-    badge.className = 'badge'
-    badge.textContent = 'Featured'
-    card.appendChild(badge)
   }
 
   return card
@@ -50,15 +46,19 @@ function renderProjects(projects) {
   const projectsList = document.querySelector('#projects-list')
   projectsList.innerHTML = ''
 
-  if (!Array.isArray(projects) || projects.length === 0) {
+  const featuredProjects = Array.isArray(projects)
+    ? projects.filter((project) => project && project.featured === true)
+    : []
+
+  if (featuredProjects.length === 0) {
     const empty = document.createElement('p')
     empty.className = 'status-text'
-    empty.textContent = 'No projects found.'
+    empty.textContent = 'No featured projects found.'
     projectsList.appendChild(empty)
     return
   }
 
-  projects.forEach((project) => {
+  featuredProjects.forEach((project) => {
     projectsList.appendChild(createProjectCard(project))
   })
 }

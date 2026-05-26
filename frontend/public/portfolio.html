@@ -1,66 +1,160 @@
+<header class="site-header">
+  <nav class="nav-pill" aria-label="Primary">
+    <a class="nav-link" href="#profile">Profile</a>
+    <a class="nav-link" href="#projects">Projects</a>
+    <a class="nav-link nav-link--hover-example" href="#education">Education</a>
+    <a class="nav-link nav-link--cta" href="#contact">Contact</a>
+  </nav>
+</header>
+
 <main class="page">
-  <section class="section hero">
-    <p class="eyebrow">Backend Engineer Portfolio</p>
-    <h1>Nguyen Duc Huu Thien</h1>
-    <p>
-      I build maintainable backend services, clean REST APIs, and practical full-stack projects.
-    </p>
-    <a class="link-button" href="#projects">View Projects</a>
-  </section>
+  <section class="section section--hero" id="profile">
+    <div class="container hero">
+      <div class="hero-left">
+        <div class="avatar-wrap">
+          <img class="avatar" src="/portfolio-avatar.jpg" alt="Profile avatar" />
+        </div>
+        <h1 class="name">Thien Nguyen</h1>
+      </div>
 
-  <section class="section">
-    <h2>Skills</h2>
-    <ul class="chip-list">
-      <li>Java</li>
-      <li>Spring Boot</li>
-      <li>REST API Design</li>
-      <li>PostgreSQL</li>
-      <li>Docker</li>
-      <li>GitHub Actions</li>
-    </ul>
-  </section>
+      <div class="hero-right">
+        <p class="role">Fresher Software Engineer</p>
+        <p class="summary">
+          Backend-focused fullstack developer interested in scalable APIs, system architecture, and
+          AI-assisted development workflows.
+        </p>
+      </div>
 
-  <section class="section" id="projects">
-    <h2>Projects</h2>
-    <p class="section-note">Live data loaded from <code>/api/projects</code>.</p>
-    <div id="projects-list" class="projects-grid">
-      <p class="status-text">Loading projects...</p>
+      <div class="hero-links" aria-label="Links">
+        <a class="hero-link" href="https://github.com/thienhhu14594/" target="_blank" rel="noreferrer noopener">
+          Github
+        </a>
+        <a class="hero-link" href="https://www.linkedin.com/in/thienhhu/" target="_blank" rel="noreferrer noopener">
+          LinkedIn
+        </a>
+        <a class="hero-link" href="mailto:thienhhu@gmail.com">Email</a>
+        <a class="hero-link" href="/Nguyen Duc Huu Thien.pdf" download>Resume</a>
+      </div>
     </div>
   </section>
 
-  <section class="section">
-    <h2>Education and Achievements</h2>
-    <div class="two-column">
-      <article class="card">
-        <h3>Education</h3>
-        <p>Bachelor in Information Technology</p>
-        <p>FPT University</p>
-      </article>
-      <article class="card">
-        <h3>Achievements</h3>
-        <ul class="simple-list">
-          <li>Built and deployed full-stack portfolio project.</li>
-          <li>Designed API response DTO layer for clean contracts.</li>
-          <li>Practiced AI-assisted development workflows.</li>
-        </ul>
-      </article>
+  <section class="section section--dark" id="skills">
+    <div class="container">
+      <h2 class="section-title section-title--light">SKILLS</h2>
+
+      <div class="skills-grid">
+        <article class="skill-card">
+          <h3 class="skill-title">Language</h3>
+          <ul class="skill-list">
+            <li>Java</li>
+            <li>JavaScript</li>
+            <li>TypeScript</li>
+            <li>Python</li>
+          </ul>
+        </article>
+
+        <article class="skill-card">
+          <h3 class="skill-title">Frontend</h3>
+          <ul class="skill-list">
+            <li>ReactJs</li>
+            <li>NextJs</li>
+            <li>Angular</li>
+          </ul>
+        </article>
+
+        <article class="skill-card">
+          <h3 class="skill-title">Backend</h3>
+          <ul class="skill-list">
+            <li>Java Servlet</li>
+            <li>REST API</li>
+            <li>MVC</li>
+          </ul>
+        </article>
+
+        <article class="skill-card">
+          <h3 class="skill-title">Database</h3>
+          <ul class="skill-list">
+            <li>MySQL</li>
+            <li>PostgreSQL</li>
+          </ul>
+        </article>
+
+        <article class="skill-card">
+          <h3 class="skill-title">Tools</h3>
+          <ul class="skill-list">
+            <li>Git</li>
+            <li>Vercel</li>
+            <li>Nginx</li>
+            <li>Directus CMS</li>
+            <li>Figma</li>
+          </ul>
+        </article>
+
+        <article class="skill-card">
+          <h3 class="skill-title">AI &amp; Mathematic</h3>
+          <ul class="skill-list">
+            <li>YOLOv8</li>
+            <li>OpenCV</li>
+            <li>Genetic Algo</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="contact">
-    <h2>Contact</h2>
-    <form id="contact-form" class="contact-form">
-      <label for="name">Name</label>
-      <input id="name" name="name" type="text" required />
+  <section class="section section--secondary" id="projects">
+    <div class="container">
+      <h2 class="section-title section-title--blue">PROJECTS</h2>
+      <div id="projects-list" class="projects-grid">
+        <p class="status-text">Loading projects...</p>
+      </div>
+    </div>
+  </section>
 
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" required />
+  <section class="section section--dark" id="education">
+    <div class="container">
+      <h2 class="section-title section-title--light">Education &amp; Awards</h2>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
+      <div class="edu-grid">
+        <article class="card">
+          <h3 class="card-title">Education</h3>
+          <p class="card-text">
+            Bachelor in computer Science<br />
+            Vietnam German University<br />
+            GPA: 7.7/10
+          </p>
+        </article>
 
-      <button type="submit">Send</button>
-    </form>
-    <p id="contact-feedback" class="status-text"></p>
+        <article class="card">
+          <h3 class="card-title">Awards</h3>
+          <p class="card-text">
+            Vietnam National Champion, World Robot Olympiad. Represented Vietnam at the
+            international competition in Costa Rica, working on embedded systems and robotics
+            programming.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--secondary" id="contact">
+    <div class="container">
+      <h2 class="section-title section-title--blue">Contact</h2>
+
+      <form id="contact-form" class="contact-form">
+        <label class="form-label" for="name">Name</label>
+        <input class="form-input" id="name" name="name" type="text" required />
+
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" id="email" name="email" type="email" required />
+
+        <label class="form-label" for="message">Message</label>
+        <textarea class="form-input form-textarea" id="message" name="message" rows="4" required></textarea>
+
+        <button class="form-button" type="submit">Send</button>
+      </form>
+
+      <p id="contact-feedback" class="status-text"></p>
+    </div>
   </section>
 </main>

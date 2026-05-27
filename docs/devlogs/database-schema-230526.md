@@ -27,3 +27,24 @@ CREATE INDEX IF NOT EXISTS idx_projects_featured ON projects (featured);
 - technologies stored as text for simplicity
 - featured used for homepage highlighting
 - no timestamps yet (keep schema minimal)
+
+## contact_messages
+
+```sql
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id          BIGSERIAL PRIMARY KEY,
+  name        TEXT NOT NULL,
+  email       TEXT NOT NULL,
+  message     TEXT NOT NULL,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+  CONSTRAINT contact_messages_name_not_blank
+    CHECK (length(btrim(name)) > 0),
+
+  CONSTRAINT contact_messages_email_not_blank
+    CHECK (length(btrim(email)) > 0),
+
+  CONSTRAINT contact_messages_message_not_blank
+    CHECK (length(btrim(message)) > 0)
+);
+```

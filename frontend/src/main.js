@@ -104,10 +104,56 @@ async function bootstrap() {
   const contactFeedback = document.querySelector('#contact-feedback')
 
   if (contactForm && contactFeedback) {
-    contactForm.addEventListener('submit', (event) => {
+    contactForm.addEventListener('submit', async (event) => {
       event.preventDefault()
-      contactFeedback.textContent = 'Thanks for your message. I will get back to you soon.'
-      contactForm.reset()
+
+      const formData = new FormData(contactForm)
+      const payload = {
+        name: String(formData.get('name') || '').trim(),
+        email: String(formData.get('email') || '').trim(),
+        message: String(formData.get('message') || '').trim(),
+      }
+
+      const submitButton = contactForm.querySelector('button[type="submit"]')
+      if (submitButton) {
+        submitButton.disabled = true
+      }
+
+      contactFeedback.textContent = 'Sending...'
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+
+        if (!response.ok) {
+          let serverMessage = `Request failed with status ${response.status}`
+          try {
+            const data = await response.json()
+            serverMessage = data?.message || data?.detail || serverMessage
+          } catch {
+            // ignore: non-JSON error body
+          }
+
+          throw new Error(serverMessage)
+        }
+
+        const data = await response.json().catch(() => null)
+        contactFeedback.textContent =
+          data?.message || 'Thanks for your message. I will get back to you soon.'
+        contactForm.reset()
+      } catch (error) {
+        contactFeedback.textContent =
+          error instanceof Error
+            ? `Unable to send message: ${error.message}`
+            : 'Unable to send message. Please try again.'
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false
+        }
+      }
     })
   }
 

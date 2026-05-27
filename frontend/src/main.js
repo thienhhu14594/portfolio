@@ -2,6 +2,12 @@ import './style.css'
 
 const app = document.querySelector('#app')
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+function apiUrl(path) {
+  if (!API_BASE_URL) return path
+  return `${API_BASE_URL}${path.startsWith('/') ? path : `/${path}`}`
+}
+
 async function renderPortfolioLayout() {
   const response = await fetch('/portfolio.html')
   if (!response.ok) {
@@ -67,7 +73,7 @@ async function loadProjects() {
   const projectsList = document.querySelector('#projects-list')
 
   try {
-    const response = await fetch('/api/projects')
+    const response = await fetch(apiUrl('/api/projects'))
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`)
     }
@@ -122,7 +128,7 @@ async function bootstrap() {
       contactFeedback.textContent = 'Sending...'
 
       try {
-        const response = await fetch('/api/contact', {
+        const response = await fetch(apiUrl('/api/contact'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

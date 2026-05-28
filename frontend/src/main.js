@@ -83,7 +83,7 @@ async function loadProjects() {
   } catch (error) {
     projectsList.innerHTML = `
       <p class="status-text">
-        Unable to load projects from <code>/api/projects</code>. Please make sure the backend is running.
+        Unable to load projects from <code>/api/projects</code>. Please wait for the backend to be ready.
       </p>
     `
   }

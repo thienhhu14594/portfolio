@@ -45,4 +45,4 @@ docs/       -> project documentation and devlogs
 
 ## Status
 
-Project currently in active development.
+Project is completed.

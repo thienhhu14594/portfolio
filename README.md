@@ -46,3 +46,4 @@ docs/       -> project documentation and devlogs
 ## Status
 
 Project is completed.
+Visit my portfolio at: <https://thienhhu.netlify.app/>
